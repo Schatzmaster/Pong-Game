@@ -13,7 +13,7 @@ screen.tracer(0)  # Tracer controls the animation. 0 turns it off.
 # Instantiating objects
 
 paddle_right = Paddle(x=350, y=0)
-paddle_2 = Paddle(x=-350, y=0)
+paddle_left = Paddle(x=-350, y=0)
 ball = Ball()
 
 # Make screen listen to keystrokes
@@ -21,8 +21,8 @@ ball = Ball()
 screen.listen()
 screen.onkeypress(paddle_right.up, "Up")
 screen.onkeypress(paddle_right.down, "Down")
-screen.onkeypress(paddle_2.up, "w")
-screen.onkeypress(paddle_2.down, "s")
+screen.onkeypress(paddle_left.up, "w")
+screen.onkeypress(paddle_left.down, "s")
 
 # Running game
 
@@ -34,6 +34,11 @@ while game_runs:
     ball.move()
 
     if ball.ycor() > 280 or ball.ycor() < -280:
-        ball.bounce()
+        ball.bounce_y()
+
+    # Detect collision with paddle
+    if ball.distance(paddle_right) < 50 and ball.xcor() > 320 or ball.distance(paddle_left) < 50 and ball.xcor() < -320:
+        ball.bounce_x()
+
 
 screen.exitonclick()
