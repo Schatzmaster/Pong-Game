@@ -2,6 +2,7 @@ import time
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
 
 # Set up Screen
 screen = Screen()
@@ -15,6 +16,10 @@ screen.tracer(0)  # Tracer controls the animation. 0 turns it off.
 paddle_right = Paddle(x=350, y=0)
 paddle_left = Paddle(x=-350, y=0)
 ball = Ball()
+scoreboard_left = Scoreboard(score=0, x_cor=-350, y_cor=265, align="left")
+scoreboard_right = Scoreboard(score=0, x_cor=350, y_cor=265, align="right")
+score_right = 0
+score_left = 0
 
 # Make screen listen to keystrokes
 
@@ -40,10 +45,18 @@ while game_runs:
     if ball.distance(paddle_right) < 50 and ball.xcor() > 320 or ball.distance(paddle_left) < 50 and ball.xcor() < -320:
         ball.bounce_x()
 
+    # Detect if right paddle misses
     if ball.xcor() > 400:
         ball.reset_ball()
+        scoreboard_left.clear()
+        score_left += 1
+        scoreboard_left = Scoreboard(score_left, x_cor=-350, y_cor=265, align="left")
 
+    # Detect if left paddle misses
     if ball.xcor() < -400:
         ball.reset_ball()
+        scoreboard_right.clear()
+        score_right += 1
+        scoreboard_right = Scoreboard(score_right, x_cor=350, y_cor=265, align="right")
 
 screen.exitonclick()
