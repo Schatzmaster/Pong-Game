@@ -30,12 +30,11 @@ screen.onkeypress(paddle_left.up, "w")
 screen.onkeypress(paddle_left.down, "s")
 
 # Running game
-
 game_runs = True
 
 while game_runs:
     screen.update()
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     ball.move()
 
     if ball.ycor() > 280 or ball.ycor() < -280:
@@ -51,6 +50,7 @@ while game_runs:
         scoreboard_left.clear()
         score_left += 1
         scoreboard_left = Scoreboard(score_left, x_cor=-350, y_cor=265, align="left")
+        sleep_time = 0.1
 
     # Detect if left paddle misses
     if ball.xcor() < -400:
@@ -58,5 +58,6 @@ while game_runs:
         scoreboard_right.clear()
         score_right += 1
         scoreboard_right = Scoreboard(score_right, x_cor=350, y_cor=265, align="right")
+        sleep_time = 0.1
 
 screen.exitonclick()
